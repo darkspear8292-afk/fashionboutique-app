@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script>
+window.addEventListener('error',function(e){var d=document.getElementById('errbar');if(!d){d=document.createElement('div');d.id='errbar';document.body.insertBefore(d,document.body.firstChild)}d.style.cssText='background:#b02f4a;color:#fff;padding:10px 14px;font:13px/1.4 sans-serif;position:relative;z-index:99';d.textContent='Problem found: '+e.message+' (line '+e.lineno+'). Please send a screenshot of this.'});
+</script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fashion Boutique – Orders</title>
+<meta name="theme-color" content="#fbeee9">
+<style>
+:root{color-scheme:light;--ink:#2b2335;--blue:#43306b;--pa:#43306b;--pb:#26346e;--line:#e7dbe0;--soft:#f3ebf1;--card:#fffcfa;--bg1:#fffaf5;--bg2:#fbeee9;--bg3:#f6f0e4;--red:#b02f4a;--grn:#23775a;--amb:#9a6410;--gold:#c4a15c;--gold-d:#876428;--on:#fff;--disp:"Playfair Display","Bodoni MT",Didot,"Bodoni 72",Georgia,"Noto Serif",serif;--body:Inter,"Segoe UI","Helvetica Neue",Roboto,system-ui,sans-serif}
+*{box-sizing:border-box}
+html{background:var(--bg1)}
+body{margin:0;min-height:100vh;color:var(--ink);font:16px/1.45 var(--body);background:radial-gradient(700px 380px at 100% 0,rgba(196,161,92,.2),transparent 65%),linear-gradient(175deg,var(--bg1) 0%,var(--bg2) 55%,var(--bg3) 100%)}
+#app{max-width:720px;margin:auto;padding:12px 12px 80px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:-12px -12px 0;padding:20px 14px 54px;border-radius:0 0 30px 30px;color:var(--blue);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='14'%3E%3Cpath d='M0 .5h40M.5 0v8M10 0v4M20 0v6M30 0v4' stroke='%23876428' stroke-opacity='.4' fill='none'/%3E%3C/svg%3E") repeat-x top,radial-gradient(420px 200px at 95% 0,rgba(196,161,92,.3),transparent 70%),linear-gradient(120deg,#fff7ec 0%,#fbe9e3 55%,#f4ead6 100%);border-bottom:2px solid var(--gold);box-shadow:0 14px 26px -20px rgba(67,48,107,.6)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto}.logo{color:var(--gold-d);display:flex}
+h1{font:700 15px/1.15 var(--disp);letter-spacing:.1em;white-space:nowrap;margin:0;color:#2a1d47}
+h1 small{display:block;font:italic 500 11.5px var(--disp);letter-spacing:.03em;color:var(--gold-d);margin-top:5px}
+h2{font-family:var(--disp)}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:8px 14px;border-radius:10px;cursor:pointer}
+button.p{background:linear-gradient(135deg,var(--pa),var(--pb));border-color:transparent;color:var(--on)}
+button.gold{white-space:nowrap;flex:none;padding:8px 12px;font-size:14px;background:linear-gradient(135deg,var(--pa),var(--pb));border-color:transparent;color:#fff;font-weight:600}
+button.d{border-color:var(--red);color:var(--red)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:1px}
+input,select,textarea{font:inherit;width:100%;min-height:44px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+#q{border-radius:99px;padding-left:18px}
+label{display:block;font-size:13px;opacity:.85;margin:8px 0 3px}
+#rem{display:grid;grid-template-columns:repeat(4,1fr);margin:-34px 6px 14px;position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 24px -16px rgba(67,48,107,.55);overflow:hidden}
+#rem div{padding:11px 4px;text-align:center;cursor:pointer;font-size:12px;line-height:1.2}
+#rem div+div{border-left:1px solid var(--line)}
+#rem b{display:block;font:700 24px/1.1 var(--disp);margin-bottom:3px}
+#rem .mn b{font-size:17px;padding-top:5px}
+.chips{display:flex;gap:7px;overflow-x:auto;margin:10px -12px 0;padding:2px 12px 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;white-space:nowrap;min-height:36px;padding:5px 14px;border-radius:99px;font-size:14px;color:var(--ink)}
+.chips button.sc{border-width:1.5px}
+.chips button.s-Cutting{border-color:var(--amb);color:var(--amb)}.chips button.s-Stitching{border-color:var(--blue);color:var(--blue)}.chips button.s-Ready,.chips button.s-Delivered{border-color:var(--grn);color:var(--grn)}
+.chips button.on,.chips button.on.sc{background:linear-gradient(135deg,var(--pa),var(--pb));border-color:transparent;color:var(--on)}
+.tag{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--soft);border:1px solid transparent;white-space:nowrap}
+.tag.red{border-color:var(--red)}.tag.grn{border-color:var(--grn)}
+.tag.s-Cutting{color:var(--amb);border-color:var(--amb)}
+.tag.s-Stitching{color:var(--blue);border-color:var(--blue)}
+.tag.s-Ready{color:var(--grn);border-color:var(--grn);font-weight:700}
+.tag.s-Delivered{color:var(--grn)}
+.red{color:var(--red)}.grn{color:var(--grn)}.amb{color:var(--amb)}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.cn{font:700 20px/1.15 var(--disp);display:block}
+.meta{font-size:13px;opacity:.8}
+.its{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
+.il{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;padding:3px 8px;border-radius:10px}
+.il:nth-child(odd){background:var(--soft)}
+.il.hit{font-weight:700;box-shadow:inset 3px 0 var(--gold)}
+.is{width:auto;min-height:34px;padding:3px 6px;font-size:13px;border-width:2px;border-radius:8px}
+.is.s-Cutting{color:var(--amb);border-color:var(--amb)}.is.s-Stitching{color:var(--blue);border-color:var(--blue)}.is.s-Ready,.is.s-Delivered{color:var(--grn);border-color:var(--grn)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.acts button,.acts select{min-height:38px;padding:5px 12px;font-size:14px}.acts select{width:auto}
+.tools{margin:18px 0 0;border:1px dashed var(--line);border-radius:14px;padding:2px 12px 10px}
+.tools summary{cursor:pointer;padding:12px 0;color:var(--gold-d);font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.g2>*,.g3>*{min-width:0}.g3.top{grid-template-columns:1fr 1fr}.g3.top>div:last-child{grid-column:1/-1}input[type=date]{min-width:0;max-width:100%}
+.pr2{display:grid;grid-template-columns:2fr 1fr auto;gap:6px;margin:4px 0}
+.it{display:grid;grid-template-columns:2fr .7fr 1fr 40px;gap:6px;margin:4px 0}
+.box{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:16px;padding:14px;margin:14px 0;box-shadow:0 10px 22px -18px rgba(67,48,107,.5)}
+.box h2{font:600 17px var(--disp);margin:0 0 4px;color:var(--blue)}
+.tt{font-size:18px;font-weight:700}
+.empty{text-align:center;padding:28px 12px;color:var(--blue)}.empty p{color:var(--ink);opacity:.8}
+button.gold{margin-left:auto}
+@media(max-width:420px){h1{font-size:13.5px;letter-spacing:.07em}h1 small{font-size:10.5px}button.gold{padding:7px 9px;font-size:13px}header{padding-left:10px;padding-right:10px}}
+.sv{font-size:12px;text-align:center;margin:-4px 0 8px}
+.tt2{position:fixed;left:12px;right:12px;bottom:18px;z-index:9;background:#2a1d47;color:#fff;padding:14px;border-radius:14px;text-align:center}.tt2 a{color:#fff;font-weight:700}
+@supports(-webkit-touch-callout:none){input,select,textarea{font-size:16px!important}}
+.chips{gap:0;margin:8px -12px 0;padding:0 12px;border-bottom:1px solid var(--line)}
+#schips{border-bottom:0;margin-top:0}
+.chips button{border:0;border-radius:0;background:none;padding:8px 14px 8px 0;min-height:40px;font-size:14px;color:var(--ink);opacity:.7}
+.chips button.on,.chips button.on.sc{background:none;color:var(--blue);opacity:1;font-weight:700;box-shadow:inset 0 -2px 0 var(--gold)}
+.chips button.sc::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#8d7fa8}
+.chips button.s-Cutting::before{background:#b8791a}.chips button.s-Stitching::before{background:#43306b}.chips button.s-Ready::before,.chips button.s-Delivered::before{background:#23775a}
+#q{border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding-left:2px}
+.gh{display:flex;align-items:baseline;gap:8px;margin:22px 0 2px;padding-bottom:6px;font:600 19px var(--disp);color:var(--blue);border-bottom:1px solid var(--gold)}
+.gh span{font:500 12px var(--body);color:var(--gold-d)}.gh.red{color:var(--red)}
+.ord{border-bottom:1px solid var(--line)}
+.oh{display:flex;gap:14px;padding:14px 2px;cursor:pointer}
+.dt{flex:none;width:44px;text-align:center;line-height:1}.dt b{display:block;font:600 28px var(--disp);color:var(--blue)}.dt small{font:600 10px var(--body);letter-spacing:.14em;color:var(--gold-d)}
+.od .dt b{color:var(--red)}.dn{opacity:.62}
+.ob{flex:1;min-width:0}.cn{font:600 18px/1.2 var(--disp)}.am{font:600 14px var(--body);white-space:nowrap}
+.meta{font-size:12.5px;opacity:.75;margin-top:2px}
+.its2{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:13px}.it2{display:inline-flex;align-items:center;gap:6px}.it2.hit{font-weight:700}
+.dot{width:8px;height:8px;border-radius:50%;background:#8d7fa8;display:inline-block;flex:none}
+.dot.s-Cutting{background:#b8791a}.dot.s-Stitching{background:#43306b}.dot.s-Ready{background:#23775a}.dot.s-Delivered{background:#14624a}
+.dtl{background:var(--soft);border-radius:14px;padding:12px;margin:0 0 14px}
+.dr{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;margin-bottom:8px}
+.dtl .il:nth-child(even){background:rgba(255,255,255,.6)}.dtl .il:nth-child(odd){background:none}
+.it{padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}.it:last-child{border-bottom:0}
+.sw{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:6px}.sw select{padding:5px;font-size:14px}
+[hidden]{display:none!important}
+#print{display:none}
+@page{size:A4;margin:0}
+@media print{
+ body.pr>#app{display:none}
+ body.pr #print{display:block}
+ body{background:#fff;background-image:none}
+ #print,#print *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+#print{font-family:var(--body);color:#2b2335}
+.inv,.slp{position:relative;width:210mm;height:296.5mm;overflow:hidden;break-after:page;page-break-after:always}
+.inv{background:#fffaf3;font-size:9.5pt;line-height:1.45}
+.inv .bg{position:absolute;inset:0;width:100%;height:100%}
+.inv .in{position:relative;padding:14mm 16mm 0}
+.ivb{display:flex;align-items:center;gap:5mm}.ivb svg{color:#8a6a2c}
+.ivn{font:700 25pt/1 var(--disp);letter-spacing:.14em;color:#2a1d47}
+.ivt{font:italic 11pt var(--disp);color:#8a6a2c;margin-top:2.2mm;letter-spacing:.03em}
+.ivrule{height:.45mm;background:linear-gradient(90deg,#c4a15c,#ecdcb4,#c4a15c);margin:7mm 0 6mm}
+.ivc{display:grid;grid-template-columns:1fr 1fr;gap:4mm 10mm;margin-bottom:5mm}
+.ivc .r{text-align:right}.ivc p{margin:0}.ivc h4{margin:0 0 1mm;font:700 9pt var(--body);letter-spacing:.08em;color:#2a1d47}
+.ivh,.ir{display:grid;grid-template-columns:1fr 16mm 30mm 34mm;gap:3mm;padding:3.2mm 4mm;align-items:center}
+.ivh{background:linear-gradient(90deg,#2a1d47,#43306b);color:#fff;font-weight:700;font-size:9pt;margin-top:4mm}
+.ir{border-bottom:.2mm solid #e9ddca;background:rgba(255,255,255,.55)}
+.c{text-align:center}.ivh .r,.ir .r{text-align:right}
+.ivtot{width:84mm;margin:0 0 0 auto;padding:3mm 4mm;background:rgba(196,161,92,.15)}
+.ivtot div{display:flex;justify-content:space-between;gap:6mm;padding:1.2mm 0}
+.ivtot .g{margin-top:1.5mm;padding-top:2.5mm;border-top:.3mm solid #c4a15c;font:700 13pt var(--disp);color:#2a1d47}
+.ivf{position:absolute;left:16mm;right:16mm;bottom:15mm;text-align:center;font-size:8.5pt}
+.ivf h5{margin:0 0 1mm;font:700 8.5pt var(--body);letter-spacing:.06em}.ivf p{margin:0}
+.ivf .th{margin-top:3mm;font:italic 10pt var(--disp);color:#8a6a2c}
+.ivf .sg{width:52mm;margin:0 0 5mm auto;padding-top:1.5mm;border-top:.25mm solid #8a6a2c;font-size:8pt}
+.slp{background:#fff;padding:14mm 16mm;font-size:10pt}
+.slp .sh{display:flex;align-items:center;gap:4mm;border-bottom:.45mm solid #c4a15c;padding-bottom:4mm}
+.slp .sh svg{color:#8a6a2c}.slp .sh b{font:700 15pt var(--disp);letter-spacing:.1em;color:#2a1d47;display:block}
+.slp .sh i{font:italic 10pt var(--disp);color:#8a6a2c}.slp .sh .r{margin-left:auto;text-align:right}
+.slp h4{margin:6mm 0 2mm;font:700 10pt var(--disp);color:#2a1d47;letter-spacing:.06em}
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm 8mm}
+.mi small{display:block;font-size:8pt;opacity:.7}.mi div{min-height:7mm;border-bottom:.25mm dotted #8a6a2c;font-weight:600}
+.sl{display:flex;justify-content:space-between;padding:1.2mm 0}.sl+.sl{border-top:.2mm solid #eadfce}
+</style><script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div id="app">
+ <header><div class="brand"><span class="logo" id="lg"></span><h1>FASHION BOUTIQUE<small>Ladies’ Tailoring and Designing</small></h1></div><button class="gold" onclick="openForm()">+ New order</button></header>
+
+ <div id="lv">
+  <div id="rem"></div>
+  <div id="sv" class="sv" role="status" onclick="gsign()" style="cursor:pointer"></div>
+  <input id="q" type="search" placeholder="Search name, phone or bill no" oninput="renderList()">
+  <div class="chips" id="chips"></div>
+  <div class="chips" id="schips"></div>
+  <div id="list"></div>
+  <details class="tools"><summary>More tools: Google, backup, staff, prices</summary>
+  <div class="acts">
+   <button class="p" id="gb" onclick="gsign()">Sign in with Google</button>
+   <button onclick="sync(1)">Sync now</button>
+   <button onclick="exportSheet()">Export to Google Sheet</button>
+   <button onclick="exp()">Download backup</button>
+   <button onclick="$('#imp').click()">Restore from file</button>
+   <button onclick="restoreDrive()">Restore from Drive</button>
+   <button onclick="staffEdit()">Staff list</button>
+   <button onclick="plOpen()">Price list</button>
+   <input id="imp" type="file" accept=".json,application/json" hidden onchange="imp(this)">
+   <small style="width:100%;opacity:.6">App version 4 · one web file for phone and computer</small>
+  </div></details>
+ </div>
+
+ <datalist id="pl"></datalist>
+ <div id="pv" hidden>
+  <h2 style="color:var(--blue)">Price list</h2>
+  <div class="box"><p style="margin:0 0 6px;font-size:14px">Add each item with its price. When you pick an item on a bill, its price fills in automatically. You can still change it for one bill.</p>
+   <div id="prs"></div><button onclick="plAdd()">+ Add item</button></div>
+  <div class="acts"><button class="p" onclick="plSave()">Save price list</button><button onclick="plClose()">Cancel</button></div>
+ </div>
+
+ <div id="fv" hidden>
+  <h2 id="ft" style="color:var(--blue)">New order</h2>
+  <div class="box">
+   <div class="g3 top">
+    <div><label for="bill">Bill no.</label><input id="bill"></div>
+    <div><label for="date">Date</label><input id="date" type="date"></div>
+    <div><label for="due">Delivery date</label><input id="due" type="date" oninput="sun()"></div>
+   </div>
+   <p id="sunw" class="red" hidden>That day is Sunday and the shop is closed.</p>
+   <label for="name">Customer name</label><input id="name">
+   <label for="phone">Phone</label><input id="phone" type="tel" inputmode="tel">
+   <label for="addr">Address</label><input id="addr">
+   <label for="status">Status of all items (or set each item below)</label>
+   <select id="status" onchange="allS(this.value)"><option>Received</option><option>Cutting</option><option>Stitching</option><option>Ready</option><option>Delivered</option></select>
+  </div>
+
+  <div class="box"><h2>Items</h2>
+   <div class="it"><small>Particulars</small><small>Qty</small><small>Rate</small><small></small></div>
+   <div id="items"></div>
+   <button onclick="addRow()">+ Add item</button>
+   <label for="disc">Discount (optional)</label><div class="g2"><input id="disc" type="number" inputmode="decimal" placeholder="0" oninput="calc()"><select id="dt" onchange="calc()"><option value="r">Rupees (₹)</option><option value="p">Percent (%)</option></select></div>
+   <div class="g2"><div><label for="adv">Advance paid</label><input id="adv" type="number" inputmode="decimal" oninput="calc()"></div>
+   <div><label>Total / Balance</label><div class="tt" id="tb"></div></div></div>
+  </div>
+
+  <div class="box"><h2>Measurements</h2><div class="g3" id="ms"></div>
+   <label for="note">Notes (design, fabric, special request)</label><textarea id="note" rows="2"></textarea>
+  </div>
+  <div class="acts">
+   <button class="p" onclick="saveOrder()">Save</button>
+   <button onclick="saveOrder(true)">Save and print</button>
+   <button onclick="closeForm()">Cancel</button>
+   <button class="d" id="del" onclick="delOrder()">Delete</button>
+  </div>
+ </div>
+</div>
+<div id="print"></div>
+<div id="tt" class="tt2" hidden></div>
+
+<script>
+const K='fb_data',$=s=>document.querySelector(s);
+let S={orders:[],staff:['Staff 1','Staff 2'],prices:null,tomb:{},gdel:[],su:0,cfg:{}},flt='all',sf='',cur=null;
+try{const c=JSON.parse(localStorage.getItem(K));if(c&&c.orders)Object.assign(S,c)}catch(e){}
+S.tomb=S.tomb||{};S.gdel=S.gdel||[];S.cfg=S.cfg||{};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){alert('This browser could not save data on this device. Please download a backup.')}};
+const touch=o=>{touch(o);o.u=Date.now();S.dd=1};
+const iso=d=>{d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const T=iso(),dd=s=>s?s.split('-').reverse().join('/'):'';
+const sub=o=>o.items.reduce((a,i)=>a+(+i.q||0)*(+i.r||0),0),dsc=o=>Math.min(sub(o),Math.max(0,Math.round(o.dt==='p'?sub(o)*(+o.disc||0)/100:(+o.disc||0)))),tot=o=>sub(o)-dsc(o),bal=o=>tot(o)-(+o.adv||0);
+const days=s=>Math.round((new Date(s+'T00:00')-new Date(T+'T00:00'))/864e5);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MS=['Length','Chest','Waist','Hip','Ghera','Sleeves','Salwar','B.Neck','F.Neck','Teera','Pant length','Mohri','Thigh','Pant waist'];
+const mv=(o,m)=>(o.m||{})[m]||(m==='Pant length'?(o.m||{}).Pant:'')||'';
+const ST=['Received','Cutting','Stitching','Ready','Delivered'],rk=s=>ST.indexOf(s||'Received'),is=(o,i)=>i.s||o.status,has=(o,k)=>o.items.length?o.items.some(i=>is(o,i)===k):o.status===k;
+const LOGOP=`<circle cx="24" cy="24" r="22.5"/><circle cx="24" cy="24" r="20" stroke-width=".6"/><circle cx="24" cy="10.4" r="1.5"/><path d="M24 12v2.4M17.2 17.2c2-1.7 4.3-2.6 6.8-2.6s4.8.9 6.8 2.6"/><path d="M17.2 17.2c-1.3 4.6-.9 8.6 1.2 12.6l.8 4.2h9.6l.8-4.2c2.1-4 2.5-8 1.2-12.6"/><path d="M24 14.6v19.4" stroke-dasharray="1.2 1.8" stroke-width=".9"/><path d="M24 34v5M19.5 39.4h9"/><path d="M36.2 11.5 34 33.2"/><ellipse cx="36.3" cy="12.6" rx=".5" ry="1.1" stroke-width=".8"/><path d="M36.3 13.7c3 2.4-2.2 4.4.3 7.2 2.2 2.4-2 4-2.2 6.4" stroke-width=".8"/>`;
+const LOGO=n=>`<svg viewBox="0 0 48 48" width="${n}" height="${n}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${LOGOP}</svg>`;
+const DRESS=`<svg viewBox="0 0 80 110" width="70" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M40 6c3 0 5 2 5 5 0 2-1 3-2 4"/><path d="M37 15c-1 1-2 2-2 4l-17 5c-3 1-5 4-5 8 0 12 5 22 8 30 3 8 3 16 3 20"/><path d="M43 15c1 1 2 2 2 4l17 5c3 1 5 4 5 8 0 12-5 22-8 30-3 8-3 16-3 20"/><path d="M24 82h32M40 82v22M28 106h24"/><path d="M40 19v44" stroke-dasharray="3 4"/></svg>`;
+const rs=n=>'₹'+(+n||0).toLocaleString('en-IN');
+const open_=o=>o.status!=='Delivered';
+
+function renderList(){
+ const a=S.orders,od=a.filter(o=>open_(o)&&days(o.due)<0),td=a.filter(o=>open_(o)&&days(o.due)===0),tm=a.filter(o=>open_(o)&&days(o.due)===1);
+ const un=a.filter(o=>bal(o)>0).reduce((s,o)=>s+bal(o),0);
+ $('#rem').innerHTML=`<div onclick="setF('od')"><b class="red">${od.length}</b>Overdue</div><div onclick="setF('soon')"><b class="amb">${td.length}</b>Due today</div><div onclick="setF('soon')"><b>${tm.length}</b>Due tomorrow</div><div class="mn" onclick="setF('un')"><b class="red">${rs(un)}</b>To collect</div>`;
+ const F={all:'All',pen:'Pending ('+a.filter(open_).length+')',soon:'Next 3 days',od:'Overdue',un:'Unpaid',dn:'Delivered'};
+ $('#chips').innerHTML=Object.keys(F).map(k=>`<button class="${k===flt?'on':''}" onclick="setF('${k}')">${F[k]}</button>`).join('');
+ const q=$('#q').value.toLowerCase();
+ let l=a.filter(o=>!q||(o.name+o.phone+o.bill).toLowerCase().includes(q)).filter(o=>({all:1,pen:open_(o),soon:open_(o)&&days(o.due)>=0&&days(o.due)<=3,rdy:open_(o)&&o.status==='Ready',od:open_(o)&&days(o.due)<0,un:bal(o)>0,dn:!open_(o)})[flt]);
+ const base=l;
+ $('#schips').innerHTML=`<button class="${sf?'':'on'}" onclick="setS('')">Any status</button>`+ST.map(k=>`<button class="sc s-${k} ${sf===k?'on':''}" onclick="setS('${k}')">${k} (${base.filter(o=>has(o,k)).length})</button>`).join('');
+ if(sf)l=l.filter(o=>has(o,sf));
+ const bucket=o=>{if(!open_(o))return 5;const d=days(o.due);return d<0?0:d===0?1:d===1?2:d<=7?3:4};
+ l.sort((x,y)=>(bucket(x)-bucket(y))||x.due.localeCompare(y.due));
+ const BK=['Overdue','Today','Tomorrow','This week','Later','Delivered'];let h='',lk=-1;
+ for(const o of l){const k=bucket(o);if(k!==lk){h+=`<h3 class="gh${k===0?' red':''}">${BK[k]}<span>${l.filter(z=>bucket(z)===k).length}</span></h3>`;lk=k}h+=rowHTML(o)}
+ $('#list').innerHTML=h||`<div class="empty">${DRESS}<p>${S.orders.length?'No orders match these filters.':'No orders yet.<br>Tap <b>+ New order</b> to make your first bill.'}</p></div>`;
+}
+let ex='';
+const MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const tgl=id=>{ex=ex===id?'':id;renderList()};
+function rowHTML(o){
+ const d=o.due.split('-'),late=open_(o)&&days(o.due)<0,b=bal(o),n=o.items.length,rd=o.items.filter(i=>rk(is(o,i))>=3).length,op=ex===o.id;
+ const dots=o.items.map(i=>{const st=is(o,i);return `<span class="it2${sf&&st===sf?' hit':''}"><i class="dot s-${st}"></i>${esc(i.p)||'Item'}${+i.q>1?' ×'+esc(i.q):''}</span>`}).join('');
+ return `<article class="ord${late?' od':''}${!open_(o)?' dn':''}"><div class="oh" role="button" tabindex="0" aria-expanded="${op}" onclick="tgl('${o.id}')" onkeydown="if(event.key==='Enter')tgl('${o.id}')">
+  <div class="dt"><b>${d[2]}</b><small>${MON[+d[1]-1]}</small></div>
+  <div class="ob"><div class="row"><span class="cn">${esc(o.name)}</span><span class="am ${b>0?'red':'grn'}">${b>0?rs(b)+' due':'Paid'}</span></div>
+  <div class="meta">Bill #${esc(o.bill)}${o.staff?' · '+esc(o.staff):''}${open_(o)&&n?' · '+rd+'/'+n+' ready':''}</div><div class="its2">${dots}</div></div></div>${op?detail(o):''}</article>`}
+function detail(o){
+ const b=bal(o),d=days(o.due),w=!open_(o)?'Delivered':d<0?`Overdue by ${-d} day${d<-1?'s':''}`:d===0?'Due today':d===1?'Due tomorrow':'Due';
+ return `<div class="dtl"><div class="dr"><span class="tag s-${esc(o.status)}">${esc(o.status)}</span><span class="${open_(o)&&d<0?'red':''}">${w} · ${dd(o.due)}</span><span>${esc(o.phone)}</span></div>
+ ${o.items.map((i,n)=>{const st=is(o,i);return `<div class="il ${sf&&st===sf?'hit':''}"><span>${esc(i.p)||'Item'} × ${esc(i.q)}${i.w?'<small> · '+esc(i.w)+'</small>':''}</span><select class="is s-${st}" aria-label="Status of ${esc(i.p)||'item'}" onchange="setItem('${o.id}',${n},this.value)">${ST.map(x=>`<option ${x===st?'selected':''}>${x}</option>`).join('')}</select></div>`}).join('')}
+ <div class="acts"><button class="p" onclick="openForm('${o.id}')">Edit</button><button onclick="printOrder('${o.id}','c')">Print bill</button><button onclick="printOrder('${o.id}','s')">Slip</button><button onclick="wa('${o.id}')">WhatsApp</button><button onclick="wa('${o.id}','text')">WA text</button>${b>0?`<button onclick="paid('${o.id}')">Mark paid</button>`:''}${open_(o)?`<select aria-label="Set status of all items" style="width:auto;padding:5px" onchange="setSt('${o.id}',this.value)">${ST.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>`:''}</div></div>`}
+const setF=k=>{flt=k;renderList()},setS=k=>{sf=sf===k?'':k;renderList()};
+const get=id=>S.orders.find(o=>o.id===id);
+function paid(id){const o=get(id);o.adv=tot(o);touch(o);save();sync();renderList()}
+function setItem(id,n,v){const o=get(id);o.items[n].s=v;o.items.forEach(i=>{i.s=i.s||o.status});o.status=ST[Math.min(...o.items.map(i=>rk(i.s)))];touch(o);save();sync();renderList()}
+function allS(v){document.querySelectorAll('#items .s').forEach(e=>e.value=v)}
+function setSt(id,v){if(v==='Delivered')return deliv(id);const o=get(id);o.status=v;o.items.forEach(i=>i.s=v);touch(o);save();sync();renderList()}
+function deliv(id){const o=get(id);if(bal(o)>0&&!confirm('Balance '+rs(bal(o))+' is unpaid. Mark delivered anyway?')){renderList();return}o.status='Delivered';o.items.forEach(i=>i.s='Delivered');touch(o);save();sync();renderList()}
+
+function sun(){$('#sunw').hidden=!($('#due').value&&new Date($('#due').value+'T00:00').getDay()===0)}
+const stf=w=>w&&!S.staff.includes(w)?S.staff.concat(w):S.staff;
+function row(i){i=i||{};const r=document.createElement('div');r.className='it';
+ r.innerHTML=`<input class="p" list="pl" onchange="pick(this)" placeholder="Pick or type item" value="${esc(i.p)}"><input class="q" type="number" inputmode="decimal" value="${esc(i.q||1)}" oninput="calc()"><input class="r" type="number" inputmode="decimal" value="${esc(i.r)}" oninput="calc()"><button class="d" style="padding:4px" onclick="delRow(this)" aria-label="Delete this line">x</button><div class="sw"><select class="s" aria-label="Item status">${ST.map(x=>`<option ${x===(i.s||'Received')?'selected':''}>${x}</option>`).join('')}</select><select class="w" aria-label="Staff for this item"><option value="">Staff…</option>${stf(i.w).map(x=>`<option ${x===i.w?'selected':''}>${esc(x)}</option>`).join('')}</select></div>`;$('#items').appendChild(r)}
+const addRow=()=>{const l=[...document.querySelectorAll('#items .w')].pop();row({w:l?l.value:''})};
+function delRow(b){b.parentNode.remove();if(!document.querySelector('#items .it'))row();calc()}
+function items(){return [...document.querySelectorAll('#items .it')].map(r=>({p:r.querySelector('.p').value,q:r.querySelector('.q').value,r:r.querySelector('.r').value,s:r.querySelector('.s').value,w:r.querySelector('.w').value})).filter(i=>i.p||+i.r)}
+function calc(){const o={items:items(),adv:$('#adv').value,disc:$('#disc').value,dt:$('#dt').value},b=bal(o);$('#tb').innerHTML=`${rs(tot(o))}${dsc(o)?' (after '+rs(dsc(o))+' off)':''} / <span class="${b>0?'red':'grn'}">${b>0?rs(b)+' due':'Paid'}</span>`}
+function openForm(id){
+ cur=id||null;const o=id?get(id):{bill:String(Math.max(0,...S.orders.map(x=>parseInt(x.bill)||0))+1),date:T,due:'',items:[{}],m:{},status:'Received'};
+ $('#ft').textContent=id?'Edit order':'New order';$('#del').hidden=!id;
+ for(const k of['bill','date','due','name','phone','addr','status','adv','disc','note'])$('#'+k).value=o[k]||'';$('#dt').value=o.dt||'r';
+ $('#items').innerHTML='';(o.items.length?o.items:[{}]).forEach(i=>row({...i,s:i.s||o.status,w:i.w!=null?i.w:(o.staff&&!o.staff.includes(',')?o.staff:'')}));
+ $('#ms').innerHTML=MS.map((m,i)=>`<div><label for="m${i}">${m}</label><input id="m${i}" value="${esc(mv(o,m))}"></div>`).join('');
+ $('#lv').hidden=true;$('#fv').hidden=false;sun();calc();scrollTo(0,0)}
+function closeForm(){$('#fv').hidden=true;$('#lv').hidden=false;renderList()}
+function saveOrder(pr){
+ if(!$('#name').value.trim()||!$('#due').value){alert('Please enter customer name and delivery date.');return}
+ const o={id:cur||'o'+Date.now(),m:{}};
+ for(const k of['bill','date','due','name','phone','addr','status','adv','disc','dt','note'])o[k]=$('#'+k).value.trim();
+ o.items=items();o.staff=[...new Set(o.items.map(i=>i.w).filter(Boolean))].join(', ');if(o.items.length)o.status=ST[Math.min(...o.items.map(i=>rk(i.s)))];
+ MS.forEach((m,i)=>o.m[m]=$('#m'+i).value.trim());
+ touch(o);if(cur)S.orders[S.orders.findIndex(x=>x.id===cur)]=o;else S.orders.push(o);
+ save();sync();closeForm();if(pr===true)printOrder(o.id)}
+function delOrder(){if(confirm('Delete this order for good?')){const d0=get(cur);if(d0&&d0.ev)S.gdel.push(d0.ev);S.tomb[cur]=Date.now();S.dd=1;S.orders=S.orders.filter(o=>o.id!==cur);save();sync();closeForm()}}
+
+const f2=n=>'₹'+(+n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+function invoice(o){
+ const b=bal(o),pt=+o.adv>0,st=b<=0?'PAID':pt?'PART PAID':'UNPAID',sc=b<=0?'#23775a':pt?'#9a6410':'#b02f4a';
+ const rows=o.items.map(i=>`<div class="ir"><span>${esc(i.p)}</span><span class="c">${esc(i.q)}</span><span class="r">${f2(i.r)}</span><span class="r">${f2((+i.q||0)*(+i.r||0))}</span></div>`).join('');
+ return `<section class="inv"><svg class="bg" viewBox="0 0 210 297" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2e1bf"/><stop offset="1" stop-color="#f9e6e0"/></linearGradient><linearGradient id="gB" x1="0" x2="1"><stop offset="0" stop-color="#f8e6e0"/><stop offset="1" stop-color="#efe5cf"/></linearGradient><pattern id="tp" width="2" height="6" patternUnits="userSpaceOnUse"><path d="M0 0v6" stroke="#b08d4a" stroke-width=".18"/><path d="M1 0v3" stroke="#b08d4a" stroke-width=".12"/></pattern></defs><path d="M0 0H210V30C172 50 128 20 80 34C46 44 22 40 0 32Z" fill="url(#gA)" opacity=".9"/><rect width="210" height="5" fill="url(#tp)" opacity=".55"/><path d="M0 297V266C36 256 72 281 116 269C156 258 186 262 210 268V297Z" fill="url(#gB)"/><svg x="38" y="92" width="134" height="134" viewBox="0 0 48 48" fill="none" stroke="#c4a15c" stroke-width=".7" stroke-linecap="round" stroke-linejoin="round" opacity=".13">${LOGOP}</svg><path d="M-5 205C20 190 30 225 52 214S80 190 96 206" fill="none" stroke="#c4a15c" stroke-width=".35" stroke-dasharray="1.2 1.6" opacity=".5"/><g fill="none" stroke="#c4a15c" stroke-width=".4" opacity=".5"><circle cx="196" cy="236" r="4"/><circle cx="196" cy="236" r="1.6"/><circle cx="14" cy="252" r="3"/><circle cx="14" cy="252" r="1.2"/></g></svg><div class="in">
+ <div class="ivb">${LOGO(64)}<div><div class="ivn">FASHION BOUTIQUE</div><div class="ivt">Ladies’ Tailoring and Designing</div></div></div>
+ <div class="ivrule"></div>
+ <div class="ivc"><div><h4>FASHION BOUTIQUE</h4><p>Shop No. 49, Keshav Palace</p><p>Pillar No. 20, Khajpura, Bailey Road</p><p>Patna · Phone: 9835056741</p><p>Timings: 11am to 9pm · Sunday closed</p></div>
+ <div class="r"><h4>INVOICE</h4><p>Invoice No: #${esc(o.bill)}</p><p>Date: ${dd(o.date)}</p><p>Delivery date: <b>${dd(o.due)}</b></p></div>
+ <div><h4>Billed To:</h4><p>${esc(o.name)}</p>${o.phone?`<p>${esc(o.phone)}</p>`:''}${o.addr?`<p>${esc(o.addr)}</p>`:''}</div>
+ <div class="r"><h4>Payment Details:</h4><p>Status: <b style="color:${sc}">${st}</b></p><p>Advance paid: ${f2(o.adv)}</p><p>Balance due: ${f2(b)}</p>${o.staff?`<p>Advisor: ${esc(o.staff)}</p>`:''}</div></div>
+ <div class="ivh"><span>Item Description</span><span class="c">Qty</span><span class="r">Unit Price</span><span class="r">Total Price</span></div>${rows}
+ <div class="ivtot"><div><span>Subtotal:</span><b>${f2(sub(o))}</b></div>${dsc(o)?`<div><span>Discount${o.dt==='p'?' ('+esc(o.disc)+'%)':''}:</span><b>− ${f2(dsc(o))}</b></div>`:''}<div class="g"><span>Grand Total:</span><span>${f2(tot(o))}</span></div><div><span>Advance paid:</span><span>${f2(o.adv)}</span></div><div><b>Balance due:</b><b>${f2(b)}</b></div></div>
+ </div>
+ <div class="ivf"><div class="sg">Authorised signature</div><h5>Fashion Boutique Terms</h5><p>We are not responsible for any loss or damage if the delivery date exceeds 30 days.</p><p>Shop closed on Sundays.</p><div class="th">Thank you for choosing Fashion Boutique. It is our privilege to style you.</div></div></section>`}
+function slip(o){
+ return `<section class="slp"><div class="sh">${LOGO(44)}<div><b>FASHION BOUTIQUE</b><i>Tailor slip · shop copy</i></div><div class="r"><b style="font:700 13pt var(--disp)">Bill #${esc(o.bill)}</b>Due: ${dd(o.due)}</div></div>
+ <h4>Customer</h4><div class="sl"><span>${esc(o.name)}</span><span>${esc(o.phone)}</span></div>
+ <h4>Items</h4>${o.items.map(i=>`<div class="sl"><span>${esc(i.p)} × ${esc(i.q)}${i.w?' · '+esc(i.w):''}</span><span>${esc(is(o,i))}</span></div>`).join('')}
+ <h4>Measurements</h4><div class="mg">${MS.map(m=>`<div class="mi"><small>${m}</small><div>${esc(mv(o,m))}</div></div>`).join('')}</div>
+ <h4>Notes</h4><div style="min-height:20mm;border-bottom:.25mm dotted #8a6a2c">${esc(o.note)}</div>
+ <h4>Assigned to</h4><div class="sl"><span><b>${esc(o.staff)||'-'}</b></span><span>Sign: ____________________</span></div></section>`}
+function printOrder(id,mode){
+ const o=get(id),t=document.title;
+ $('#print').innerHTML=(mode==='s'?'':invoice(o))+(mode==='c'?'':slip(o));
+ document.title='Invoice-'+o.bill+'-'+(o.name||'').replace(/[^\w]+/g,'-');
+ document.body.classList.add('pr');
+ setTimeout(()=>{print();setTimeout(()=>{document.body.classList.remove('pr');document.title=t},600)},100)}
+const toast=h=>{const e=$('#tt');e.innerHTML=h;e.hidden=false;setTimeout(()=>e.hidden=true,20000)};
+function logoC(x,px,py,sz,col,lw){x.save();x.translate(px,py);x.scale(sz/48,sz/48);x.strokeStyle=col;x.lineCap='round';x.lineJoin='round';lw=lw||1.6;x.lineWidth=lw;
+ const A=(a,b,r)=>{x.beginPath();x.arc(a,b,r,0,7);x.stroke()};A(24,24,22.5);x.lineWidth=lw*.4;A(24,24,20);x.lineWidth=lw;A(24,10.4,1.5);
+ x.beginPath();x.ellipse(36.3,12.6,.5,1.1,0,0,7);x.stroke();
+ ['M24 12v2.4M17.2 17.2c2-1.7 4.3-2.6 6.8-2.6s4.8.9 6.8 2.6','M17.2 17.2c-1.3 4.6-.9 8.6 1.2 12.6l.8 4.2h9.6l.8-4.2c2.1-4 2.5-8 1.2-12.6','M24 34v5M19.5 39.4h9','M36.2 11.5 34 33.2','M36.3 13.7c3 2.4-2.2 4.4.3 7.2 2.2 2.4-2 4-2.2 6.4'].forEach(d=>x.stroke(new Path2D(d)));
+ x.setLineDash([1.2,1.8]);x.lineWidth=lw*.55;x.beginPath();x.moveTo(24,14.6);x.lineTo(24,34);x.stroke();x.restore()}
+function drawInvoice(o){
+ const W=1240,H=1754,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+ const SE='"Playfair Display",Didot,Georgia,serif',SA='Inter,"Segoe UI",Helvetica,Arial,sans-serif',PL='#2a1d47',GD='#8a6a2c',TX='#2b2335',L=94,R=W-94;
+ const T=(s,px,py,f,col,al,ls)=>{s=String(s==null?'':s);x.font=f;x.fillStyle=col;x.textAlign='left';x.textBaseline='alphabetic';
+  const m=ch=>x.measureText(ch).width,w=ls?[...s].reduce((a,ch)=>a+m(ch)+ls,-ls):m(s),sx=al==='r'?px-w:al==='c'?px-w/2:px;
+  if(!ls){x.fillText(s,sx,py);return}let q=sx;for(const ch of s){x.fillText(ch,q,py);q+=m(ch)+ls}};
+ const lin=(c0,c1,a,b,c,d)=>{const g=x.createLinearGradient(a,b,c,d);g.addColorStop(0,c0);g.addColorStop(1,c1);return g};
+ const fit=(s,mx)=>{s=String(s||'');x.font='22px '+SA;while(s.length>3&&x.measureText(s).width>mx)s=s.slice(0,-2);return s};
+ const ln=(arr,px,py,al)=>arr.forEach((s,i)=>T(s,px,py+i*34,'24px '+SA,TX,al));
+ x.fillStyle='#fffaf3';x.fillRect(0,0,W,H);
+ x.fillStyle=lin('#f2e1bf','#f9e6e0',0,0,W,220);x.beginPath();x.moveTo(0,0);x.lineTo(W,0);x.lineTo(W,200);x.bezierCurveTo(1020,300,760,120,470,200);x.bezierCurveTo(270,260,130,235,0,190);x.fill();
+ x.fillStyle=lin('#f8e6e0','#efe5cf',0,0,W,0);x.beginPath();x.moveTo(0,H);x.lineTo(0,1575);x.bezierCurveTo(210,1515,425,1665,685,1595);x.bezierCurveTo(920,1530,1100,1555,W,1585);x.lineTo(W,H);x.fill();
+ x.globalAlpha=.12;logoC(x,300,560,640,'#c4a15c',.9);x.globalAlpha=1;
+ logoC(x,L,78,128,GD);
+ T('FASHION BOUTIQUE',250,150,'700 60px '+SE,PL,'l',8);T('Ladies’ Tailoring and Designing',252,198,'italic 28px '+SE,GD,'l',1);
+ x.fillStyle=lin('#c4a15c','#ecdcb4',L,0,R,0);x.fillRect(L,252,R-L,3);
+ T('FASHION BOUTIQUE',L,312,'700 22px '+SA,PL,'l',2);
+ ln(['Shop No. 49, Keshav Palace','Pillar No. 20, Khajpura, Bailey Road','Patna · Phone: 9835056741','Timings: 11am to 9pm · Sunday closed'],L,350,'l');
+ T('INVOICE',R,312,'700 22px '+SA,PL,'r',2);ln(['Invoice No: #'+o.bill,'Date: '+dd(o.date),'Delivery date: '+dd(o.due)],R,350,'r');
+ const b=bal(o),pt=+o.adv>0,st=b<=0?'PAID':pt?'PART PAID':'UNPAID',sc=b<=0?'#23775a':pt?'#9a6410':'#b02f4a';
+ T('Billed To:',L,520,'700 22px '+SA,PL,'l',2);ln([o.name,o.phone,o.addr].filter(Boolean),L,558,'l');
+ T('Payment Details:',R,520,'700 22px '+SA,PL,'r',2);T('Status: '+st,R,558,'700 24px '+SA,sc,'r');
+ ln(['Advance paid: '+f2(o.adv),'Balance due: '+f2(b)].concat(o.staff?['Advisor: '+o.staff]:[]),R,592,'r');
+ const n=o.items.length,rh=Math.min(64,Math.floor(470/Math.max(n,1))),y0=690,H1='700 22px '+SA;
+ x.fillStyle=lin(PL,'#43306b',L,0,R,0);x.fillRect(L,y0,R-L,64);
+ T('Item Description',L+22,y0+41,H1,'#fff','l');T('Qty',700,y0+41,H1,'#fff','c');T('Unit Price',930,y0+41,H1,'#fff','r');T('Total Price',R-22,y0+41,H1,'#fff','r');
+ o.items.forEach((i,k)=>{const y=y0+64+k*rh,my=y+rh/2+8,f='22px '+SA;x.fillStyle='rgba(255,255,255,.6)';x.fillRect(L,y,R-L,rh);x.fillStyle='#e9ddca';x.fillRect(L,y+rh-2,R-L,2);
+  T(fit(i.p,520),L+22,my,f,TX,'l');T(i.q,700,my,f,TX,'c');T(f2(i.r),930,my,f,TX,'r');T(f2((+i.q||0)*(+i.r||0)),R-22,my,f,TX,'r')});
+ const rt=[['Subtotal:',f2(sub(o))]].concat(dsc(o)?[['Discount'+(o.dt==='p'?' ('+o.disc+'%)':'')+':','− '+f2(dsc(o))]]:[]),ty=y0+64+n*rh+30;
+ x.fillStyle='rgba(196,161,92,.18)';x.fillRect(640,ty,R-640,190+44*rt.length);
+ let yy=ty+44;rt.forEach(r=>{T(r[0],662,yy,'22px '+SA,TX,'l');T(r[1],R-22,yy,'700 22px '+SA,TX,'r');yy+=44});
+ x.fillStyle='#c4a15c';x.fillRect(662,yy-24,R-684,2);yy+=24;
+ T('Grand Total:',662,yy,'700 30px '+SE,PL,'l');T(f2(tot(o)),R-22,yy,'700 30px '+SE,PL,'r');yy+=44;
+ T('Advance paid:',662,yy,'22px '+SA,TX,'l');T(f2(o.adv),R-22,yy,'22px '+SA,TX,'r');yy+=44;
+ T('Balance due:',662,yy,H1,TX,'l');T(f2(b),R-22,yy,H1,TX,'r');
+ x.fillStyle=GD;x.fillRect(R-310,1540,310,2);T('Authorised signature',R-155,1570,'20px '+SA,TX,'c');
+ T('Fashion Boutique Terms',W/2,1628,'700 20px '+SA,PL,'c',1);
+ T('We are not responsible for any loss or damage if the delivery date exceeds 30 days.',W/2,1658,'20px '+SA,TX,'c');
+ T('Shop closed on Sundays.',W/2,1686,'20px '+SA,TX,'c');
+ T('Thank you for choosing Fashion Boutique. It is our privilege to style you.',W/2,1724,'italic 24px '+SE,GD,'c');
+ return cv.toDataURL('image/png')}
+async function wa(id,mode){
+ const o=get(id),p=(o.phone||'').replace(/\D/g,'').slice(-10);
+ const t=`Dear ${o.name},\nFASHION BOUTIQUE - Ladies’ Tailoring and Designing\nBill #${o.bill}: Total ${rs(tot(o))}${dsc(o)?' (after discount)':''}\nAdvance ${rs(o.adv)}, Balance ${rs(bal(o))}\nDelivery date: ${dd(o.due)}\nThank you!`;
+ const chat='https://wa.me/'+(p?'91'+p:'')+'?text='+encodeURIComponent(t);
+ if(mode==='text'){open(chat,'_blank');return}
+ sv('Preparing invoice…');
+ const blob=await (await fetch(drawInvoice(o))).blob(),file=new File([blob],'Invoice-'+o.bill+'.png',{type:'image/png'});
+ if(navigator.canShare&&navigator.canShare({files:[file]})){
+  try{await navigator.share({files:[file],text:t,title:'Invoice #'+o.bill});gstat();return}catch(e){if(e.name==='AbortError'){gstat();return}}}
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file.name;document.body.appendChild(a);a.click();a.remove();
+ gstat();toast('Invoice picture saved. <a href="'+chat+'" target="_blank" rel="noopener">Open the WhatsApp chat</a> and attach it.')}
+function staffEdit(){const n=prompt('Staff names, separated by commas:',S.staff.join(', '));if(n!==null){S.staff=n.split(',').map(s=>s.trim()).filter(Boolean);S.su=Date.now();S.dd=1;save();sync()}}
+const CLIENT_ID='PASTE_YOUR_CLIENT_ID_HERE';
+const SC='openid email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/calendar.events';
+const GOK=/^[\w-]+\.apps\.googleusercontent\.com$/.test(CLIENT_ID)&&/^https?:$/.test(location.protocol);
+const DU='https://www.googleapis.com/drive/v3/files',UU='https://www.googleapis.com/upload/drive/v3/files',DF='FashionBoutique-data.json';
+const CAL='https://www.googleapis.com/calendar/v3/calendars/primary/events',SHU='https://sheets.googleapis.com/v4/spreadsheets';
+const DPL=()=>['Blouse','Salwar suit','Kurti','Lehenga','Petticoat','Fall / Pico','Alteration'].map(n=>({n,r:''}));
+let tok='',tokExp=0,busy=0,me='';
+const sv=(t,c)=>{const e=$('#sv');e.textContent=t;e.style.color=c||''};
+const pend=()=>S.dd||S.gdel.length||S.orders.some(x=>x.dirty);
+const live=()=>tok&&Date.now()<tokExp-60000;
+function gstat(){
+ if(!GOK)return sv('Saved on this device only. Google link is not set up yet (see the setup steps).');
+ if(!live()){$('#gb').textContent='Sign in with Google';return sv('Saved on this device. Tap here to sign in with Google and back up to Drive.','var(--amb)')}
+ $('#gb').textContent='Google: '+(me||'signed in');sv('✓ Saved on this device and in Google Drive'+(pend()?' (saving…)':''),'var(--grn)')}
+function getToken(){return new Promise((ok,no)=>{
+ if(live())return ok(tok);
+ if(!GOK||typeof google==='undefined'||!google.accounts)return no({msg:GOK?'Google sign-in could not load. Check your internet.':'Google is not set up yet.'});
+ google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:SC,
+  callback:r=>{if(r.error)return no({msg:r.error_description||r.error});tok=r.access_token;tokExp=Date.now()+(+r.expires_in||3600)*1000;try{sessionStorage.setItem('fb_tok',JSON.stringify({t:tok,exp:tokExp}))}catch(e){}S.cfg.granted=1;ok(tok)},
+  error_callback:e=>no({msg:e.type==='popup_closed'?'Sign-in window was closed.':(e.type||'Sign-in failed')})}).requestAccessToken({prompt:S.cfg.granted?'':'consent'})})}
+async function g(m,u,b,rt){
+ const t=await getToken(),h={Authorization:'Bearer '+t};let body;
+ if(b!==undefined){if(rt){h['Content-Type']=rt;body=b}else{h['Content-Type']='application/json';body=JSON.stringify(b)}}
+ const r=await fetch(u,{method:m,headers:h,body});
+ if(r.status===401){tok='';tokExp=0;try{sessionStorage.removeItem('fb_tok')}catch(e){}}
+ if(!r.ok){const e=new Error('Google error '+r.status);e.status=r.status;try{e.detail=(await r.json()).error.message}catch(x){}throw e}
+ const tx=await r.text();try{return JSON.parse(tx)}catch(x){return tx}}
+const errT=e=>e.msg||e.detail||e.message||String(e);
+function userInfo(){g('GET','https://www.googleapis.com/oauth2/v3/userinfo').then(r=>{me=r.email;gstat()}).catch(()=>{})}
+async function gsign(){
+ if(!GOK){alert('Google is not set up yet. Open this page from your web address and put your Client ID in the file (see the setup steps).');return}
+ try{await getToken();save();userInfo();sv('Connecting to Google Drive…');await pull();gstat();sync()}catch(e){sv('⚠ '+errT(e),'var(--red)')}}
+
+/* ---- Drive: one data file + one backup copy per day ---- */
+const pack=()=>({v:4,orders:S.orders.map(o=>{const c={...o};delete c.dirty;return c}),staff:S.staff,prices:S.prices,tomb:S.tomb,su:S.su,cfg:{sheetId:S.cfg.sheetId||''}});
+async function dFind(name){const r=await g('GET',DU+'?q='+encodeURIComponent("name='"+name+"' and trashed=false")+'&fields=files(id,name,modifiedTime)&pageSize=1');return r.files[0]||null}
+async function dPut(name,id,data){
+ const j=JSON.stringify(data);
+ if(id)return g('PATCH',UU+'/'+id+'?uploadType=media',j,'application/json');
+ const bd='fbx'+Date.now(),b='--'+bd+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify({name,mimeType:'application/json'})+'\r\n--'+bd+'\r\nContent-Type: application/json\r\n\r\n'+j+'\r\n--'+bd+'--';
+ return g('POST',UU+'?uploadType=multipart&fields=id',b,'multipart/related; boundary='+bd)}
+async function driveSave(){
+ let id=S.cfg.fileId;
+ if(!id){const f=await dFind(DF);id=f?f.id:''}
+ try{const r=await dPut(DF,id,pack());if(!id)id=r.id}catch(e){if(e.status===404&&id){S.cfg.fileId='';return driveSave()}throw e}
+ S.cfg.fileId=id;
+ const day=iso();if(S.cfg.snap!==day){await dPut('FashionBoutique-backup-'+day+'.json','',pack());S.cfg.snap=day}}
+function merge(r){
+ let up=false;const m=new Map((r.orders||[]).map(o=>[o.id,o])),tomb={...(r.tomb||{})};
+ for(const k in S.tomb)if((S.tomb[k]||0)>(tomb[k]||0)){tomb[k]=S.tomb[k];up=true}
+ for(const o of S.orders){const p=m.get(o.id);if(!p||(o.u||0)>(p.u||0)){m.set(o.id,o);up=true}}
+ const all=[...m.values()];S.orders=all.filter(o=>!((tomb[o.id]||0)>(o.u||0)));if(S.orders.length!==all.length)up=true;
+ S.tomb=tomb;
+ if((r.su||0)>(S.su||0)){S.staff=r.staff||S.staff;S.prices=r.prices||S.prices;S.su=r.su}else if((S.su||0)>(r.su||0))up=true;
+ const rs_=r.cfg&&r.cfg.sheetId;if(!S.cfg.sheetId&&rs_)S.cfg.sheetId=rs_;else if(S.cfg.sheetId&&!rs_)up=true;
+ if(up)S.dd=1}
+async function pull(){
+ const f=await dFind(DF);
+ if(!f){S.dd=1;return}
+ S.cfg.fileId=f.id;
+ const r=await g('GET',DU+'/'+f.id+'?alt=media');
+ if(r&&r.orders)merge(r);
+ S.prices=S.prices||DPL();save();plFill();renderList()}
+
+/* ---- Calendar: one all-day event per order, on the delivery date ---- */
+const nextDay=d=>{const t=new Date(d+'T00:00:00Z');t.setUTCDate(t.getUTCDate()+1);return t.toISOString().slice(0,10)};
+const gone=e=>e.status===404||e.status===410;
+async function calUp(o){
+ if(o.status==='Delivered'){if(o.ev){try{await g('DELETE',CAL+'/'+o.ev)}catch(e){if(!gone(e))throw e}o.ev=''}return}
+ const b=bal(o),ev={summary:'Delivery #'+o.bill+' '+o.name+(o.staff?' ('+o.staff+')':'')+(b>0?' - Balance Rs '+b:' - Paid'),
+  description:'Phone: '+(o.phone||'')+'\nStatus: '+o.status+'\nItems: '+o.items.map(i=>i.p+' ['+is(o,i)+']'+(i.w?' - '+i.w:'')).join(', ')+(o.note?'\nNotes: '+o.note:''),
+  start:{date:o.due},end:{date:nextDay(o.due)},reminders:{useDefault:false,overrides:[{method:'popup',minutes:900}]}};
+ if(o.ev){try{await g('PUT',CAL+'/'+o.ev,ev);return}catch(e){if(!gone(e))throw e;o.ev=''}}
+ o.ev=(await g('POST',CAL,ev)).id}
+
+/* ---- Auto-save to Google (Calendar + Drive) ---- */
+async function sync(manual){
+ if(busy)return;
+ if(!GOK){gstat();return}
+ if(!live()){gstat();if(manual===1)gsign();return}
+ busy=1;sv('Saving to Google…');let ok=1;
+ try{
+  for(const o of S.orders.filter(x=>x.dirty)){o.dirty=0;try{await calUp(o)}catch(e){o.dirty=1;throw e}save()}
+  for(const ev of S.gdel.slice()){try{await g('DELETE',CAL+'/'+ev)}catch(e){if(!gone(e))throw e}S.gdel=S.gdel.filter(x=>x!==ev);save()}
+  if(S.dd){S.dd=0;try{await driveSave()}catch(e){S.dd=1;throw e}save()}
+ }catch(e){ok=0;sv('⚠ Google could not save: '+errT(e)+'. Your data is safe on this device.','var(--red)')}
+ busy=0;if(ok){pend()?sync():gstat()}}
+
+/* ---- Google Sheet: bulk export ---- */
+const SH_HEAD=['Bill','Date','Delivery date','Customer','Phone','Address','Staff','Status','Items','Total','Advance','Balance','Payment','Measurements','Notes'];
+const shRow=o=>{const b=bal(o);return [o.bill,dd(o.date),dd(o.due),o.name,o.phone||'',o.addr||'',o.staff||'',o.status,o.items.map(i=>i.p+' x'+i.q+' @'+i.r+' ['+is(o,i)+']'+(i.w?' - '+i.w:'')).join('; ')+(dsc(o)?' | Discount '+dsc(o):''),tot(o),+o.adv||0,b,b<=0?'Paid':(+o.adv>0?'Part paid':'Unpaid'),MS.filter(m=>mv(o,m)).map(m=>m+': '+mv(o,m)).join(', '),o.note||'']};
+async function exportSheet(){
+ if(!GOK){alert('Google is not set up yet (see the setup steps).');return}
+ try{
+  sv('Exporting to Google Sheet…');await getToken();
+  const rows=[SH_HEAD].concat(S.orders.slice().sort((a,b)=>a.due.localeCompare(b.due)).map(shRow));
+  let id=S.cfg.sheetId;
+  if(id){try{await g('GET',SHU+'/'+id+'?fields=spreadsheetId')}catch(e){id=''}}
+  if(!id){const r=await g('POST',SHU,{properties:{title:'Fashion Boutique Orders'},sheets:[{properties:{title:'Orders'}}]});id=r.spreadsheetId;S.cfg.sheetId=id;S.dd=1;save()}
+  await g('POST',SHU+'/'+id+'/values/Orders!A:Z:clear',{});
+  await g('PUT',SHU+'/'+id+'/values/Orders!A1?valueInputOption=RAW',{values:rows});
+  gstat();toast('✓ '+S.orders.length+' orders exported. <a href="https://docs.google.com/spreadsheets/d/'+id+'" target="_blank" rel="noopener">Open your Google Sheet</a>');sync()
+ }catch(e){sv('⚠ Export failed: '+errT(e),'var(--red)')}}
+
+/* ---- Backup and restore ---- */
+function applyBackup(d){S.orders=d.orders||[];S.staff=d.staff||S.staff;S.prices=d.prices||S.prices||DPL();S.tomb=d.tomb||{};S.su=Date.now();S.orders.forEach(o=>o.dirty=1);S.dd=1;save();plFill();renderList();sync()}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(pack(),null,1)],{type:'application/json'}));a.download='fashion-boutique-backup-'+iso()+'.json';document.body.appendChild(a);a.click();a.remove()}
+function imp(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.orders)throw 0;if(confirm('Replace the data on this device with this backup file?'))applyBackup(d)}catch(e){alert('This is not a valid backup file.')}};r.readAsText(f);el.value=''}
+async function restoreDrive(){
+ try{
+  await getToken();
+  const r=await g('GET',DU+'?q='+encodeURIComponent("name contains 'FashionBoutique-' and trashed=false")+'&fields=files(id,name,modifiedTime)&orderBy='+encodeURIComponent('modifiedTime desc')+'&pageSize=10');
+  if(!r.files.length){alert('No backups found in Google Drive yet.');return}
+  const n=prompt('Type the number of the backup to restore:\n'+r.files.map((f,i)=>(i+1)+') '+f.name+' - '+new Date(f.modifiedTime).toLocaleString()).join('\n'));
+  const f=r.files[(+n)-1];if(!f)return;
+  if(!confirm('Replace the data on this device with "'+f.name+'"?'))return;
+  applyBackup(await g('GET',DU+'/'+f.id+'?alt=media'))
+ }catch(e){alert('Could not restore: '+errT(e))}}
+
+async function boot(){
+ renderList();
+ try{const t=JSON.parse(sessionStorage.getItem('fb_tok'));if(t&&t.exp>Date.now()+60000){tok=t.t;tokExp=t.exp}}catch(e){}
+ gstat();
+ if(live()){userInfo();try{await pull()}catch(e){sv('⚠ '+errT(e),'var(--red)')}sync()}
+ setInterval(()=>{if(pend()&&live())sync()},60000);
+ addEventListener('online',()=>sync());
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&live()&&!busy)pull().then(()=>sync()).catch(()=>{})});
+}
+S.prices=S.prices||DPL();
+function plFill(){$('#pl').innerHTML=S.prices.filter(p=>p.n).map(p=>`<option value="${esc(p.n)}">${p.r!==''?'Rs '+esc(p.r):''}</option>`).join('')}
+function pick(el){const p=S.prices.find(x=>x.n.toLowerCase()===el.value.trim().toLowerCase());if(p&&p.r!==''){el.parentNode.querySelector('.r').value=p.r;calc()}}
+function plRows(){$('#prs').innerHTML=S.prices.map(p=>`<div class="pr2"><input class="n" placeholder="Item name" value="${esc(p.n)}"><input class="r" type="number" inputmode="decimal" placeholder="Price" value="${esc(p.r)}"><button class="d" onclick="this.parentNode.remove()" aria-label="Remove item">x</button></div>`).join('')}
+function plRead(){S.prices=[...document.querySelectorAll('#prs .pr2')].map(d=>({n:d.querySelector('.n').value.trim(),r:d.querySelector('.r').value})).filter(p=>p.n)}
+function plOpen(){$('#lv').hidden=true;$('#pv').hidden=false;plRows()}
+function plAdd(){plRead();S.prices.push({n:'',r:''});plRows()}
+function plClose(){$('#pv').hidden=true;$('#lv').hidden=false}
+function plSave(){plRead();S.su=Date.now();S.dd=1;save();plFill();plClose();sync()}
+plFill();
+$('#lg').innerHTML=LOGO(innerWidth<420?38:46);
+boot();
+</script>
+</body></html>
